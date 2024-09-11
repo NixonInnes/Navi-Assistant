@@ -1,5 +1,7 @@
+import itertools
 import click
 import time
+import sys
 
 from . import config, navi
 
@@ -69,14 +71,20 @@ def ask(query):
         assistant_id=assistant_id,
     )
 
-    while run.status != "completed":
-        run = client.beta.threads.runs.retrieve(
-            thread_id=thread_id, 
-            run_id=run.id)
-        time.sleep(1)
-        
+    for frame in itertools.cycle(navi.frames):
+        click.echo("\r" + " " * 50 , nl=False)
+        click.echo("\r" + frame, nl=False)
 
-    messages = client.beta.threads.messages.list(thread_id, limit=1)
+        if run.status != "completed":
+            run = client.beta.threads.runs.retrieve(
+                thread_id=thread_id, 
+                run_id=run.id)
+            time.sleep(0.1)
+        else:
+            break
+    click.echo("\r" + navi.styled_fairy)
+
+    messages = client.beta.threads.messages.list(thread_id, limit=2, order="asc")
 
     for message in messages:
         assert message.content[0].type == "text"

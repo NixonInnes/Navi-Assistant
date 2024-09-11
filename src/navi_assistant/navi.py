@@ -5,7 +5,7 @@ from openai import OpenAI
 import itertools
 
 
-fairy = "·.•°•.·.✧ ✦ 🧚 "
+fairy = "·.•°•.·.✧ ✦ 🧚 ✦ "
 
 styled_fairy = click.style(fairy, fg="magenta", bold=True)
 
@@ -45,17 +45,16 @@ def create_thread(client: OpenAI, assistant_id: str):
     return thread.id
 
 frames = [
-    "🧚 ",
-    "· 🧚 ",
-    "·. 🧚 ",
-    "·.• 🧚 ",
-    "·.•° 🧚 ",
-    "·.•°• 🧚 ",
-    "·.•°•. 🧚 ",
-    "·.•°•.· 🧚 ",
-    "·.•°•.·. 🧚 ",
-    "·.•°•.·.✧ 🧚 ",
-    "·.•°•.·.✧ ✦ 🧚 "
+    click.style("🧚 ", fg="magenta"),
+    click.style("· 🧚 ", fg="magenta"),
+    click.style("·. 🧚 ", fg="magenta"),
+    click.style("·.• 🧚 ", fg="magenta"),
+    click.style("·.•° 🧚 ", fg="magenta"),
+    click.style("·.•°• 🧚 ", fg="magenta"),
+    click.style("·.•°•. 🧚 ", fg="magenta"),
+    click.style("·.•°•.· 🧚 ", fg="magenta"),
+    click.style("·.•°•.·. 🧚 ", fg="magenta"),
+    click.style("·.•°•.·.✧ 🧚 ", fg="magenta"),
 ]
 
 def animated_loading(duration):
@@ -71,3 +70,11 @@ def animated_loading(duration):
         if duration <= 0:
             break
         duration -= 0.2
+
+def wait_on_run(run, thread):
+    while run.status != "completed":
+        run = thread.runs.retrieve(
+            thread_id=thread.id,
+            run_id=run.id)
+        time.sleep(0.1)
+    return run
