@@ -1,0 +1,15 @@
+[project]
+name = "navi-assistant"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=1.44.1",
+    "click>=8.1.7",
+    "tomlkit>=0.13.2",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
