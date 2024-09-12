@@ -4,17 +4,18 @@ import logging
 
 from . import COMMANDS_FILE
 
-def load_commands() -> dict:
+def load_commands() -> dict[str, "Command"]:
     """Load commands from the commands file and return a dictionary of Command objects."""
     with open(COMMANDS_FILE, "r") as f:
-        commands = json.load(f)
+        commands: dict[str, str | dict[str, str]] = json.load(f)
 
     return {
-        name: Command(name, command["command"], command["input"], command["definition"]) for name, command in commands.items()
+        name: Command(name, command["command"], command["input"], command["definition"]) 
+        for name, command in commands.items()
     }
 
 class Command:
-    def __init__(self, name: str, command: str, input: str | None, definition: dict):
+    def __init__(self, name: str, command: str, input: str | None, definition: dict[str, dict]):
         self._logger = logging.getLogger(f"Command.{name}")
         definition["function"]["name"] = name
 
@@ -23,7 +24,7 @@ class Command:
         self.input = input
         self.definition = definition
 
-    def __call__(self, **kwargs) -> str:
+    def __call__(self, **kwargs: str) -> str:
         """Run the command with the given kwargs and return the result in JSON format."""
         command = self.command.format(**kwargs)
 
