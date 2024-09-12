@@ -28,8 +28,12 @@ def generate_default_config():
 
 def load_config() -> tk.TOMLDocument:
     """Load the configuration from the config file."""
-    with open(CONFIG_FILE, "r") as f:
-        config = tk.load(f)
+    if not os.path.exists(CONFIG_FILE):
+        config = generate_default_config()
+        save_config(config)
+    else:
+        with open(CONFIG_FILE, "r") as f:
+            config = tk.load(f)
 
     return config
 
