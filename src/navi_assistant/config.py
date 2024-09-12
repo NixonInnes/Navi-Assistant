@@ -1,7 +1,10 @@
+import os
 import tomlkit as tk
 
 
 from . import CONFIG_FILE
+
+
 
 
 def generate_default_config():
@@ -35,3 +38,8 @@ def load_config() -> tk.TOMLDocument:
 def save_config(doc: tk.TOMLDocument) -> None:
     with open(CONFIG_FILE, "w") as f:
         tk.dump(doc, f)
+
+
+if not os.path.exists(CONFIG_FILE):
+    doc = generate_default_config()
+    save_config(doc)
