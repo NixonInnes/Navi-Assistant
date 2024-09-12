@@ -77,7 +77,7 @@ def setup():
     setup_assistant(config, client)
     
     # Create thread
-    thread_id = ai.create_thread(client, config["openai"]["assistant_id"])
+    thread_id = ai.create_thread(client)
     config["openai"]["thread_id"] = thread_id
 
     # Save Config

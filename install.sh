@@ -3,7 +3,7 @@
 
 set -e  # Exit on error
 
-NAVI_VERSION="0.1.0"
+NAVI_VERSION="0.1.1"
 NAVI_WHL="navi_assistant-${NAVI_VERSION}-py3-none-any.whl" 
 
 # Check if the script is run as root

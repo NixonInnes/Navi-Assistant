@@ -44,8 +44,3 @@ def save_config(doc: Container) -> None:
     """Save the configuration document to the config file."""
     with open(CONFIG_FILE, "w") as f:
         tk.dump(doc, f)
-
-
-if not os.path.exists(CONFIG_FILE):
-    doc = generate_default_config()
-    save_config(doc)

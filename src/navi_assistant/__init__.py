@@ -11,6 +11,7 @@ else:
 
 
 if not os.path.exists(COMMANDS_FILE):
+    os.makedirs(os.path.dirname(COMMANDS_FILE), exist_ok=True)
     default = os.path.join(os.path.dirname(__file__), "resources", "default_commands.json")
     shutil.copyfile(default, COMMANDS_FILE)
 
