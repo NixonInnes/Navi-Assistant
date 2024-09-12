@@ -1,0 +1,376 @@
+
+{
+    "get_date": {
+        "command": "date",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the current date and time.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_cat": {
+        "command": "cat {file}",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the content of a file.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "file": {
+                            "type": "string",
+                            "description": "The path to the file whose content is to be returned."
+                        }
+                    },
+                    "required": [
+                        "file"
+                    ],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "diff_files": {
+        "command": "diff {file1} {file2}",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Compares the contents of two files and displays the differences.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "file1": {
+                            "type": "string",
+                            "description": "The path to the first file to compare."
+                        },
+                        "file2": {
+                            "type": "string",
+                            "description": "The path to the second file to compare."
+                        }
+                    },
+                    "required": [
+                        "file1",
+                        "file2"
+                    ],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_df": {
+        "command": "df -h",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Displays disk space usage for all mounted filesystems.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_ip_address": {
+        "command": "ip address",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the output of the 'ip address' command. \nThis command returns information about network interfaces and their IP addresses.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_journalctl": {
+        "command": "journalctl --dmesg --no-pager",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Displays the logs since last boot using journalctl.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_ls_la": {
+         "command": "ls -la {directory}",
+         "definition": {
+             "type": "function",
+             "function": {
+                 "description": "Lists all files and directories in the specified directory, including hidden files, in long format.",
+                 "parameters": {
+                     "type": "object",
+                     "properties": {
+                         "directory": {
+                             "type": "string",
+                             "description": "The directory whose contents are to be listed. Use '.' for the current directory."
+                         }
+                     },
+                     "required": ["directory"],
+                     "additionalProperties": false
+                 },
+                 "strict": true
+             }
+         }
+     },
+    "get_lsblk": {
+        "command": "lsblk",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the output of the 'lsblk' command. \nThis command returns information about block devices.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_lscpu": {
+        "command": "lscpu",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the output of the 'lscpu' command. \nThis command returns information about the CPU architecture.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_lspci": {
+        "command": "lspci",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the output of the 'lspci' command. \nThis command returns information about PCI buses and devices connected to them.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_lsusb": {
+        "command": "lsusb",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the output of the 'lsusb' command. \nThis command returns information about USB buses and devices connected to them.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_ps_aux": {
+        "command": "ps aux",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Displays a list of all running processes.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_rg": {
+         "command": "rg {pattern} {directory}",
+         "definition": {
+             "type": "function",
+             "function": {
+                 "description": "Searches for a specified regex pattern in the given directory or file using ripgrep.",
+                 "parameters": {
+                     "type": "object",
+                     "properties": {
+                         "pattern": {
+                             "type": "string",
+                             "description": "The regex pattern to search for."
+                         },
+                         "directory": {
+                             "type": "string",
+                             "description": "The directory in which to search. Use '.' for the current directory."
+                         }
+                     },
+                     "required": [
+                         "pattern",
+                         "directory"
+                     ],
+                     "additionalProperties": false
+                 },
+                 "strict": true
+             }
+         }
+     },
+    "get_sensors": {
+        "command": "sensors",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the output of the 'sensors' command. \nThis command returns temperature, voltage, RPM and power information about the hardware sensors in the system.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_systemctl_status": {
+        "command": "systemctl status {service_name}",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Checks the status of a specified service.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "service_name": {
+                            "type": "string",
+                            "description": "The name of the service to check."
+                        }
+                    },
+                    "required": ["service_name"],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_tree": {
+        "command": "tree {directory}",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the output of the 'tree' command for a given directory. \nThis command returns a recursive directory listing.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "directory": {
+                            "type": "string",
+                            "description": "The path to the directory whose content is to be listed."
+                        }
+                    },
+                    "required": [
+                        "directory"
+                    ],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_uptime": {
+        "command": "uptime",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the system uptime.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_users": {
+        "command": "who",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the list of users currently logged in.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_uname": {
+        "command": "uname -a",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Returns the output of the 'uname -a' command. \nThis command returns a string that contains (in this order): \n- kernel name\n- network node hostname\n- kernel release\n- kernel version\n- machine hardware name\n- processor type\n- hardware platform\n- operating system.\n\nThe processor type and/or hardware platform may be omitted if they are unknown.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    },
+    "get_w3m": {
+        "command": "w3m -dump {url}",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Displays the content of a webpage using the w3m text-based web browser.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "url": {
+                            "type": "string",
+                            "description": "The URL of the webpage to display."
+                        }
+                    },
+                    "required": ["url"],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
+    }
+}

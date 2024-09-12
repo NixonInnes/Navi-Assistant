@@ -8,6 +8,7 @@ dependencies = [
     "openai>=1.44.1",
     "click>=8.1.7",
     "tomlkit>=0.13.2",
+    "rich>=13.8.1",
 ]
 
 [build-system]
