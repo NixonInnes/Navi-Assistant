@@ -1,9 +1,9 @@
 import click
 
-_fairy = "·.•°•.·.✧ ✦ 🧚 ✦ "
+_fairy: str = "·.•°•.·.✧ ✦ 🧚 ✦ "
 
-_fairy_motion = "·.•°•.·.✧ 🧚"
+_fairy_motion: str = "·.•°•.·.✧ 🧚"
 
-styled_fairy = click.style(_fairy, fg="magenta", bold=True)
+styled_fairy: str = click.style(_fairy, fg="magenta", bold=True)
 
-fairy_frames = [_fairy_motion[-i-1:] for i,_ in enumerate(_fairy_motion)]
+fairy_frames: list[str] = [_fairy_motion[-i - 1 :] for i, _ in enumerate(_fairy_motion)]
