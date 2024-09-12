@@ -1,4 +1,3 @@
-import os 
 import subprocess
 import json
 import logging
@@ -24,46 +23,11 @@ class Command:
 
     def __call__(self, **kwargs):
         self._logger.info(f"Running command: {self.name}")
-        command = self.command.format(**kwargs).split(" ")
+        command = self.command.format(**kwargs)
 
-        result = subprocess.run(command, text=True, capture_output=True)
+        result = subprocess.run(command, text=True, capture_output=True, shell=True)
         return json.dumps({
             "stdout": result.stdout,
             "stderr": result.stderr,
             "returncode": result.returncode
         })
-
-
-read_file_func = {
-    "type": "function",
-    "function": {
-        "name": "read_file",
-        "description": (
-            "Returns the contents of a file. \n" + 
-            "This function takes a single parameter, 'file', which is the path to the file to read."
-        ),
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "file": {
-                    "type": "string",
-                    "description": "The path to the file to read.",
-                }
-            },
-            "required": ["file"],
-            "additionalProperties": False,
-        },
-        "strict": True,
-    }
-}
-
-
-def read_file(file: str) -> str:
-    print(f"Trying to read file: {file}")
-    if not os.path.exists(file):
-        print(f"File not found: {file}")
-        return f"File not found: {file}"
-    else:
-        print(f"Reading file: {file}")
-    with open(file, "r") as f:
-        return f.read()

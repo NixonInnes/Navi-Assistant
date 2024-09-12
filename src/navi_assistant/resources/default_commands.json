@@ -372,5 +372,33 @@
                 "strict": true
             }
         }
+    },
+    "write_file": {
+        "command": "[ -e {filename} ] && {{ echo \"Error:File already exists\" >&2; exit 1; }} || echo \"{content}\" > {filename}",
+        "definition": {
+            "type": "function",
+            "function": {
+                "description": "Writes the specified content to a file.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "filename": {
+                            "type": "string",
+                            "description": "The path to the file to write to."
+                        },
+                        "content": {
+                            "type": "string",
+                            "description": "The content to write to the file."
+                        }
+                    },
+                    "required": [
+                        "filename",
+                        "content"
+                    ],
+                    "additionalProperties": false
+                },
+                "strict": true
+            }
+        }
     }
 }
