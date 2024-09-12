@@ -1,8 +1,5 @@
 import click
 
-
-
-
 def make_header(header: str):
     return (
         click.style("[ ✦ ", fg="cyan")

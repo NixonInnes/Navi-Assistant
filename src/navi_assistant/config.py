@@ -1,13 +1,11 @@
 import os
 import tomlkit as tk
 
-
 from . import CONFIG_FILE
 
 
-
-
 def generate_default_config():
+    """Generate a default configuration for the Navi Assistant."""
     navi = tk.table()
     openai = (
         tk.table()
@@ -29,6 +27,7 @@ def generate_default_config():
 
 
 def load_config() -> tk.TOMLDocument:
+    """Load the configuration from the config file."""
     with open(CONFIG_FILE, "r") as f:
         config = tk.load(f)
 
@@ -36,6 +35,7 @@ def load_config() -> tk.TOMLDocument:
 
 
 def save_config(doc: tk.TOMLDocument) -> None:
+    """Save the configuration document to the config file."""
     with open(CONFIG_FILE, "w") as f:
         tk.dump(doc, f)
 

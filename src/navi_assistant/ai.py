@@ -4,10 +4,12 @@ from . import commands
 
 
 def get_client(api_key: str):
+    """Return an OpenAI client using the provided API key."""
     return OpenAI(api_key=api_key)
 
 
 def get_assistants(client: OpenAI):
+    """Fetch all assistants from the OpenAI client."""
     assistants = [] 
     
     q = client.beta.assistants.list(limit=20)
@@ -19,11 +21,13 @@ def get_assistants(client: OpenAI):
 
 
 def create_thread(client: OpenAI, assistant_id: str):
+    """Create a new thread for the specified assistant."""
     thread = client.beta.threads.create()
     return thread.id
 
 
 def create_assistant(client: OpenAI, name: str):
+    """Create a new assistant with the given name and predefined instructions."""
     assistant = client.beta.assistants.create(
         name=name,
         model="gpt-4o-mini",

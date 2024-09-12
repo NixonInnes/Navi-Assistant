@@ -2,6 +2,7 @@
 {
     "get_date": {
         "command": "date",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -18,6 +19,7 @@
     },
     "get_cat": {
         "command": "cat {file}",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -41,6 +43,7 @@
     },
     "diff_files": {
         "command": "diff {file1} {file2}",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -69,6 +72,7 @@
     },
     "get_df": {
         "command": "df -h",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -85,6 +89,7 @@
     },
     "get_ip_address": {
         "command": "ip address",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -101,6 +106,7 @@
     },
     "get_journalctl": {
         "command": "journalctl --dmesg --no-pager",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -117,6 +123,7 @@
     },
     "get_ls_la": {
          "command": "ls -la {directory}",
+         "input": null,
          "definition": {
              "type": "function",
              "function": {
@@ -138,6 +145,7 @@
      },
     "get_lsblk": {
         "command": "lsblk",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -154,6 +162,7 @@
     },
     "get_lscpu": {
         "command": "lscpu",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -170,6 +179,7 @@
     },
     "get_lspci": {
         "command": "lspci",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -186,6 +196,7 @@
     },
     "get_lsusb": {
         "command": "lsusb",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -202,6 +213,7 @@
     },
     "get_ps_aux": {
         "command": "ps aux",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -218,6 +230,7 @@
     },
     "get_rg": {
          "command": "rg {pattern} {directory}",
+         "input": null,
          "definition": {
              "type": "function",
              "function": {
@@ -246,6 +259,7 @@
      },
     "get_sensors": {
         "command": "sensors",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -262,6 +276,7 @@
     },
     "get_systemctl_status": {
         "command": "systemctl status {service_name}",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -283,6 +298,7 @@
     },
     "get_tree": {
         "command": "tree {directory}",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -306,6 +322,7 @@
     },
     "get_uptime": {
         "command": "uptime",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -322,6 +339,7 @@
     },
     "get_users": {
         "command": "who",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -338,6 +356,7 @@
     },
     "get_uname": {
         "command": "uname -a",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -354,6 +373,7 @@
     },
     "get_w3m": {
         "command": "w3m -dump {url}",
+        "input": null,
         "definition": {
             "type": "function",
             "function": {
@@ -374,7 +394,8 @@
         }
     },
     "write_file": {
-        "command": "[ -e {filename} ] && {{ echo \"Error:File already exists\" >&2; exit 1; }} || echo \"{content}\" > {filename}",
+        "command": "[ -e {filename} ] && {{ echo \"Error:File already exists\" >&2; exit 1; }} || cat > {filename}",
+        "input": "{content}",
         "definition": {
             "type": "function",
             "function": {
