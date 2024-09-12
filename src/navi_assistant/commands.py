@@ -39,7 +39,7 @@ class JSONCommand(TypedDict):
 
 JSONCommandContainer: TypeAlias = dict[str, JSONCommand]
 
-
+# TODO: I don't think we need to loop over the Command-like objects twice here
 def load_commands() -> dict[str, "Command"]:
     """Load commands from the commands file and return a dictionary of Command objects."""
     with open(COMMANDS_FILE, "r") as f:
