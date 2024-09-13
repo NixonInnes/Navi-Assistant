@@ -1,13 +1,12 @@
 [project]
 name = "navi-assistant"
 version = "0.1.2"
-description = "Add your description here"
+description = "Navi is an OpenAI assistant manager which allows you to quickly create assistants with useful tools and query them."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "openai>=1.44.1",
     "click>=8.1.7",
-    "tomlkit>=0.13.2",
     "rich>=13.8.1",
 ]
 
