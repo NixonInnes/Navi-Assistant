@@ -20,6 +20,9 @@ if not os.path.exists(_cache_dir):
     os.makedirs(_cache_dir, exist_ok=True)
 
 
-CONFIG_FILE = os.path.join(_config_dir, "config.json")
+CONFIG_DIR = _config_dir
+CACHE_DIR = _cache_dir
 COMMANDS_DIR = os.path.join(_config_dir, "commands")
+CONFIG_FILE = os.path.join(_config_dir, "config.json")
 CACHE_FILE = os.path.join(_cache_dir, "cache.json")
+API_KEY_FILE = os.path.join(_config_dir, ".api_key")

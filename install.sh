@@ -69,4 +69,7 @@ echo "#!/bin/bash
 ${APP_DIR}/venv/bin/python -m navi_assistant \"\$@\"" > "$BIN_DIR/navi"
 chmod +x "$BIN_DIR/navi"
 
+python3 -m navi_assistant.install
+
 echo "Navi Assistant has been installed successfully. You can now run it by typing 'navi' in your terminal."
+echo "Note: You may need to add '$BIN_DIR' to your PATH to run 'navi'."

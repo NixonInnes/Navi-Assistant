@@ -10,6 +10,7 @@ from openai.types.shared.function_parameters import FunctionParameters
 
 from . import COMMANDS_DIR
 
+
 class PartialFunctionDefinition(TypedDict):
     """A partial definition of the OpenAI FunctionDefinition object.
     The definition is missing "name" as we use the filename.
@@ -97,7 +98,10 @@ def load_commands() -> dict[str, Command]:
         if file.endswith(".json"):
             name = file.removesuffix(".json")
             with open(os.path.join(COMMANDS_DIR, file), "r") as f:
-                parsed: JSONCommand = json.load(f)
-                commands[name] = Command.from_json(name, parsed)
+                try:
+                    parsed: JSONCommand = json.load(f)
+                    commands[name] = Command.from_json(name, parsed)
+                except json.JSONDecodeError as e:
+                    logging.getLogger(__name__).error(f"Error parsing {file}: {e}")
 
     return commands

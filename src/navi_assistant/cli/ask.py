@@ -12,21 +12,22 @@ from rich.console import Console
 from rich.markdown import Markdown
 
 from .. import ai
-from ..cache import NaviCache, load_cache, save_cache
+from ..cache import NaviCache, cache_handler
 from ..commands import Command, load_commands
-from ..config import load_config, save_config
+from ..config import config_handler
 from ..style import art, messaging
 
 console = Console()
 
-
+@click.command()
+@click.option("--global", "use_global", is_flag=True, help="Use the global configuration")
 @click.argument("query", nargs=-1)
-def ask(query: str):
-    """Process the users query and interact with the assistant"""
-    config = load_config()
-    cache = load_cache()
+def ask(use_global: bool, query: str):
+    """Ask your assistant a question."""
+    _, config = config_handler.load(force_global=use_global)
+    _, cache = cache_handler.load(force_global=use_global)
     
-    client = ai.get_client(config["api_key"])
+    client = ai.get_client()
     
     assistant_id = config["assistant_id"]
     thread_id = config["thread_id"]
@@ -42,8 +43,8 @@ def ask(query: str):
     # List and display messages in the thread
     display_messages(client, cache, thread_id)
 
-    save_config(config)
-    save_cache(cache)
+    config_handler.save(config, force_global=use_global)
+    cache_handler.save(cache, force_global=use_global)
 
 
 def send_user_message(client: OpenAI, thread_id: str, query_string: str):
