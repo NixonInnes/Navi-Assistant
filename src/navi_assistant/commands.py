@@ -1,18 +1,18 @@
 import json
 import logging
+import os
 import subprocess
-from typing import Literal, Self, TypeAlias, TypedDict
+from typing import Literal, Self, TypedDict
 
 from openai.types.beta.function_tool import FunctionTool
 from openai.types.shared.function_definition import FunctionDefinition
 from openai.types.shared.function_parameters import FunctionParameters
 
-from . import COMMANDS_FILE
-
+from . import COMMANDS_DIR
 
 class PartialFunctionDefinition(TypedDict):
     """A partial definition of the OpenAI FunctionDefinition object.
-    The definition is missing "name" as we set that as a key in our commands.json.
+    The definition is missing "name" as we use the filename.
     """
 
     description: str
@@ -35,20 +35,6 @@ class JSONCommand(TypedDict):
     command: str
     input: str | None
     definition: PartialFunctionTool
-
-
-JSONCommandContainer: TypeAlias = dict[str, JSONCommand]
-
-# TODO: I don't think we need to loop over the Command-like objects twice here
-def load_commands() -> dict[str, "Command"]:
-    """Load commands from the commands file and return a dictionary of Command objects."""
-    with open(COMMANDS_FILE, "r") as f:
-        dic: JSONCommandContainer = json.load(f)
-        commands = {name: JSONCommand(**command) for name, command in dic.items()}
-
-    return {
-        name: Command.from_json(name, command) for name, command in commands.items()
-    }
 
 
 class Command:
@@ -101,3 +87,17 @@ class Command:
                 "returncode": result.returncode,
             }
         )
+
+def load_commands() -> dict[str, Command]:
+    """Load commands from the commands file and return a dictionary of Command objects."""
+
+    commands: dict[str, Command] = {}
+
+    for file in os.listdir(COMMANDS_DIR):
+        if file.endswith(".json"):
+            name = file.removesuffix(".json")
+            with open(os.path.join(COMMANDS_DIR, file), "r") as f:
+                parsed: JSONCommand = json.load(f)
+                commands[name] = Command.from_json(name, parsed)
+
+    return commands
