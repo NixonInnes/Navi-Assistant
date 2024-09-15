@@ -10,12 +10,14 @@ from .cli.tools import tools
 
 @click.group()
 def cli():
-    """Navi Assistant CLI
+    """·.•°•.·.✧ ✦ 🧚 ✦ [ Navi Assistant CLI ]
+
     Navi is an OpenAI assistant manager which allows you to quickly create assistants with useful tools and query them.
 
-    By default, interacting with an assistant will use the global assistant.
-    You can also create "local" assistants which are stored in the current directory. When you use a Navi command,
-    it will check if there is a local assistant in the current directory and use that instead of the global assistant.
+    Navi provides a global assistant and local assistants. The global assitant is system-wide, and local assistants are specific
+    to a directory. You can create a local assistant by running `navi init` in a directory.
+    When you use Navi, it will check for a local assistant first, and if it doesn't exist, it will use the global 
+    assistant.
     """
     pass
 
