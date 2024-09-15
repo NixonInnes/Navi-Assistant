@@ -1,3 +1,5 @@
+# src/navi_assistant/utils.py
+
 import json
 import os
 

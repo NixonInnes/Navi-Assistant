@@ -1,3 +1,5 @@
+# src/navi_assistant/style/art.py
+
 import click
 
 _fairy: str = "·.•°•.·.✧ ✦ 🧚 ✦ "

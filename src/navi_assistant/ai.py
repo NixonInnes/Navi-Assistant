@@ -1,3 +1,5 @@
+# src/navi_assistant/ai.py
+
 import os
 from openai import OpenAI
 from openai.types.beta import AssistantToolParam
@@ -64,3 +66,7 @@ def update_assistant(client: OpenAI, assistant_id: str, name: str, model: str, i
         instructions=instructions,
         tools=[tool.definition for tool in load_commands(tools_dir).values()], # pyright: ignore[reportArgumentType]
     )
+
+def create_store(client: OpenAI, name: str) -> str:
+    store = client.beta.vector_stores.create(name=name)
+    return store.id

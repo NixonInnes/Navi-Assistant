@@ -1,3 +1,5 @@
+# src/navi_assistant/config.py
+
 from typing import TypedDict
 
 

@@ -1,3 +1,5 @@
+# src/navi_assistant/cli/sync.py
+
 import click
 
 from .. import ai

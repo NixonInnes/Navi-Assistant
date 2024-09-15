@@ -1,0 +1,1 @@
+# src/navi_assistant/install/__init__.py

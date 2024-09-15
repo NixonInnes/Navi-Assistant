@@ -1,3 +1,5 @@
+# src/navi_assistant/__init__.py
+
 import os
 
 # TODO: Add windows support

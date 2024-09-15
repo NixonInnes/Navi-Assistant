@@ -1,3 +1,5 @@
+# src/navi_assistant/commands.py
+
 import json
 import logging
 import os

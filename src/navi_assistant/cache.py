@@ -1,3 +1,5 @@
+# src/navi_assistant/cache.py
+
 from typing import TypedDict
 
 

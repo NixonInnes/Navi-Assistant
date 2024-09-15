@@ -1,3 +1,5 @@
+# src/navi_assistant/cli/tools/__init__.py
+
 import click
 
 from .pull import pull

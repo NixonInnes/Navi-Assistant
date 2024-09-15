@@ -1,3 +1,5 @@
+# src/navi_assistant/install/install.py
+
 import click
 import os
 

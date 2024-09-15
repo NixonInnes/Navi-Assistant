@@ -1,3 +1,5 @@
+# src/navi_assistant/cli/init.py
+
 import os
 
 import click

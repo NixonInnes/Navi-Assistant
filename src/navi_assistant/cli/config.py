@@ -1,3 +1,5 @@
+# src/navi_assistant/cli/config.py
+
 from typing import get_type_hints
 
 import click

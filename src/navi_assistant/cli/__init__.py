@@ -1,1 +1,1 @@
-
+# src/navi_assistant/cli/__init__.py

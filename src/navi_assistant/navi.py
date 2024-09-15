@@ -1,3 +1,5 @@
+# src/navi_assistant/navi.py
+
 import os
 
 from . import GLOBAL_CONFIG_DIR, GLOBAL_CACHE_DIR, GLOBAL_TOOLS_DIR

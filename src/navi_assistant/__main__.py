@@ -1,3 +1,5 @@
+# src/navi_assistant/__main__.py
+
 import click
 
 from .cli.ask import ask
