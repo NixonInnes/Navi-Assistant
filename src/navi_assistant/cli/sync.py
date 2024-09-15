@@ -1,22 +1,26 @@
 import click
 
 from .. import ai
-from ..config import config_handler
+from ..navi import Navi
+from ..style import art, messaging
 
 @click.command()
 @click.option("--global", "use_global", is_flag=True, help="Use the global configuration")
 def sync(use_global: bool):
     """Sync the assistant configuration with OpenAI."""
-    _, config = config_handler.load(force_global=use_global)
+    click.echo(art.styled_fairy + messaging.make_header("Sync"))
+    
+    navi = Navi(use_global)
 
     client = ai.get_client()
 
-    # TODO: Include commands in the sync
-    _ = client.beta.assistants.update(
-        assistant_id=config["assistant_id"],
-        name=config["name"],
-        model=config["model"],
-        instructions=config["instructions"],
+    ai.update_assistant(
+        client,
+        assistant_id=navi.config["assistant_id"],
+        name=navi.config["name"],
+        model=navi.config["model"],
+        instructions=navi.config["instructions"],
+        tools_dir=navi.tools_dir,
     )
 
 

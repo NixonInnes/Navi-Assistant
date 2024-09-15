@@ -4,7 +4,8 @@ from openai.types.beta import AssistantToolParam
 from openai.types.beta.assistant import Assistant
 from typing import TypedDict
 
-from . import commands, API_KEY_FILE
+from . import API_KEY_FILE
+from .commands import load_commands
 
 class AssistantSpec(TypedDict):
     name: str | None
@@ -44,30 +45,22 @@ def create_thread(client: OpenAI) -> str:
     return thread.id
 
 
-def build_assistant(name: str | None = None) -> AssistantSpec:
-    # TODO: instructions should be more dynamic (e.g. OS taken into account)
-    default_instructions_file: str = os.path.join(os.path.dirname(__file__), "resources", "instructions.txt")
-    
-    with open(default_instructions_file, "r") as f:
-        instructions = f.read()
-
+def create_assistant(client: OpenAI, name: str, model: str, instructions: str, tools_dir: str) -> str:
     # TODO: Fix tools typing
-    assistant = AssistantSpec(
-        name=name,
-        model="gpt-4o-mini",
-        instructions=instructions,
-        tools=[command.definition for command in commands.load_commands().values()], # pyright: ignore[reportArgumentType]
-    )
-    return assistant
-
-def create_assistant(client: OpenAI, name: str) -> str:
     assistant = client.beta.assistants.create(
-        **build_assistant(name)
+        name=name,
+        model=model,
+        instructions=instructions,
+        tools=[tool.definition for tool in load_commands(tools_dir).values()], # pyright: ignore[reportArgumentType]
     )
+
     return assistant.id
 
-def update_assistant(client: OpenAI, assistant_id: str) -> None:
+def update_assistant(client: OpenAI, assistant_id: str, name: str, model: str, instructions: str, tools_dir: str) -> None:
     _ = client.beta.assistants.update(
         assistant_id,
-        **build_assistant()
+        name=name,
+        model=model,
+        instructions=instructions,
+        tools=[tool.definition for tool in load_commands(tools_dir).values()], # pyright: ignore[reportArgumentType]
     )

@@ -5,6 +5,7 @@ from .cli.config import config
 from .cli.info import info
 from .cli.init import init
 from .cli.sync import sync
+from .cli.tools import tools
 
 
 @click.group()
@@ -23,6 +24,7 @@ cli.add_command(config)
 cli.add_command(info)
 cli.add_command(init)
 cli.add_command(sync)
+cli.add_command(tools)
 
 if __name__ == "__main__":
     cli()

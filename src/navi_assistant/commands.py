@@ -8,8 +8,6 @@ from openai.types.beta.function_tool import FunctionTool
 from openai.types.shared.function_definition import FunctionDefinition
 from openai.types.shared.function_parameters import FunctionParameters
 
-from . import COMMANDS_DIR
-
 
 class PartialFunctionDefinition(TypedDict):
     """A partial definition of the OpenAI FunctionDefinition object.
@@ -89,15 +87,15 @@ class Command:
             }
         )
 
-def load_commands() -> dict[str, Command]:
+def load_commands(tools_dir: str) -> dict[str, Command]:
     """Load commands from the commands file and return a dictionary of Command objects."""
 
     commands: dict[str, Command] = {}
 
-    for file in os.listdir(COMMANDS_DIR):
+    for file in os.listdir(tools_dir):
         if file.endswith(".json"):
             name = file.removesuffix(".json")
-            with open(os.path.join(COMMANDS_DIR, file), "r") as f:
+            with open(os.path.join(tools_dir, file), "r") as f:
                 try:
                     parsed: JSONCommand = json.load(f)
                     commands[name] = Command.from_json(name, parsed)

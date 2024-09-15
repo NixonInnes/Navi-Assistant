@@ -12,52 +12,48 @@ from rich.console import Console
 from rich.markdown import Markdown
 
 from .. import ai
-from ..cache import NaviCache, cache_handler
 from ..commands import Command, load_commands
-from ..config import config_handler
+from ..navi import Navi
 from ..style import art, messaging
 
 console = Console()
 
+
 @click.command()
-@click.option("--global", "use_global", is_flag=True, help="Use the global configuration")
+@click.option(
+    "--global", "use_global", is_flag=True, help="Use the global configuration"
+)
 @click.argument("query", nargs=-1)
 def ask(use_global: bool, query: str):
     """Ask your assistant a question."""
-    _, config = config_handler.load(force_global=use_global)
-    _, cache = cache_handler.load(force_global=use_global)
-    
+    navi = Navi(use_global)
     client = ai.get_client()
-    
-    assistant_id = config["assistant_id"]
-    thread_id = config["thread_id"]
-    
     query_string = " ".join(query)
 
     # Send the user input to the assistant
-    send_user_message(client, thread_id, query_string)
+    send_user_message(navi, client, query_string)
 
     # Run the assistant
-    run_assistant(client, thread_id, assistant_id)
+    run_assistant(navi, client)
 
     # List and display messages in the thread
-    display_messages(client, cache, thread_id)
+    display_messages(navi, client)
 
-    config_handler.save(config, force_global=use_global)
-    cache_handler.save(cache, force_global=use_global)
+    navi.save_config()
+    navi.save_cache()
 
 
-def send_user_message(client: OpenAI, thread_id: str, query_string: str):
+def send_user_message(navi: Navi, client: OpenAI, query_string: str):
     """Sends the user's message to the assistant"""
     _ = client.beta.threads.messages.create(
-        thread_id, role="user", content=query_string
+        navi.config["thread_id"], role="user", content=query_string
     )
 
 
-def run_assistant(client: OpenAI, thread_id: str, assistant_id: str):
+def run_assistant(navi: Navi, client: OpenAI):
     """Run the assistant and handle any required tool calls"""
     run = client.beta.threads.runs.create(
-        thread_id=thread_id, assistant_id=assistant_id
+        thread_id=navi.config["thread_id"], assistant_id=navi.config["assistant_id"]
     )
 
     for frame in itertools.cycle(art.fairy_frames):
@@ -78,18 +74,20 @@ def run_assistant(client: OpenAI, thread_id: str, assistant_id: str):
             )
             return
         elif run.status == "requires_action":
-            handle_required_actions(client, thread_id, run)
+            handle_required_actions(navi, client, run)
         elif run.status in ("cancelling", "cancelled", "failed", "expired"):
             click.echo(messaging.make_error(f"Run status: {run.status}"))
             return
-        run = client.beta.threads.runs.retrieve(thread_id=thread_id, run_id=run.id)
+        run = client.beta.threads.runs.retrieve(
+            thread_id=navi.config["thread_id"], run_id=run.id
+        )
         time.sleep(0.05)
 
 
-def handle_required_actions(client: OpenAI, thread_id: str, run: Run):
+def handle_required_actions(navi: Navi, client: OpenAI, run: Run):
     if run.required_action:
         tool_outputs: list[ToolOutput] = []
-        commands: dict[str, Command] = load_commands()
+        commands: dict[str, Command] = load_commands(navi.tools_dir)
 
         for tool in run.required_action.submit_tool_outputs.tool_calls:
             command = commands.get(tool.function.name)
@@ -101,7 +99,7 @@ def handle_required_actions(client: OpenAI, thread_id: str, run: Run):
                     tool_outputs.append(ToolOutput(tool_call_id=tool.id, output=output))
 
         if tool_outputs:
-            submit_tool_outputs(client, thread_id, run, tool_outputs)
+            submit_tool_outputs(client, navi.config["thread_id"], run, tool_outputs)
 
 
 def execute_command(cmd: Command, args: dict[str, str]):
@@ -123,13 +121,15 @@ def submit_tool_outputs(
         click.echo(messaging.make_error(f"Error submitting tool outputs: {e!r}"))
 
 
-def display_messages(client: OpenAI, cache: NaviCache, thread_id: str):
-    if cache["last_message_id"]:
+def display_messages(navi: Navi, client: OpenAI):
+    if navi.cache["last_message_id"]:
         messages = client.beta.threads.messages.list(
-            thread_id, after=cache["last_message_id"], order="asc"
+            navi.config["thread_id"], after=navi.cache["last_message_id"], order="asc"
         )
     else:
-        messages = client.beta.threads.messages.list(thread_id, order="asc")
+        messages = client.beta.threads.messages.list(
+            navi.config["thread_id"], order="asc"
+        )
 
     for message in messages:
         assert message.content[0].type == "text"
@@ -139,5 +139,4 @@ def display_messages(client: OpenAI, cache: NaviCache, thread_id: str):
             markdown = Markdown(message.content[0].text.value)
             console.print(markdown)
         click.echo()
-        cache["last_message_id"] = message.id
-    
+        navi.cache["last_message_id"] = message.id
