@@ -4,6 +4,7 @@ import click
 
 from .cli.ask import ask
 from .cli.config import config
+from .cli.files import files
 from .cli.info import info
 from .cli.init import init
 from .cli.sync import sync
@@ -25,6 +26,7 @@ def cli():
 
 cli.add_command(ask)
 cli.add_command(config)
+cli.add_command(files)
 cli.add_command(info)
 cli.add_command(init)
 cli.add_command(sync)

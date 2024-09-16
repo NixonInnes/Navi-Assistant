@@ -21,12 +21,8 @@ class Navi:
         self._config_handler = JsonHandler[NaviConfig](self.config_file)
         self._cache_handler = JsonHandler[NaviCache](self.cache_file)
 
-        if load_defaults:
-            self.config = default_config()
-            self.cache = default_cache()
-        else:
-            self.config = self._config_handler.load()
-            self.cache = self._cache_handler.load()
+        self.load_config()
+        self.load_cache()
     
     @property
     def is_global(self) -> bool:
@@ -53,10 +49,16 @@ class Navi:
         return GLOBAL_TOOLS_DIR if self.is_global else self.LOCAL_TOOLS_DIR
 
     def load_config(self) -> None:
-        self.config = self._config_handler.load()
+        if not os.path.exists(self.config_file):
+            self.config = default_config()
+        else:
+            self.config = self._config_handler.load()
 
     def load_cache(self) -> None:
-        self.cache = self._cache_handler.load()
+        if not os.path.exists(self.cache_file):
+            self.cache = default_cache()
+        else:
+            self.cache = self._cache_handler.load()
 
     def save_config(self) -> None:
         self._config_handler.save(self.config)

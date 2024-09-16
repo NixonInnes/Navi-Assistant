@@ -78,7 +78,7 @@ def setup_new_assistant(navi: Navi, client: OpenAI) -> None:
     navi.config["description"] = description
     navi.config["instructions"] = instructions
     navi.config["model"] = model
-    navi.config["assistant_id"] = ai.create_assistant(
+    navi.config["assistant_id"], navi.config["store_id"] = ai.create_assistant(
         client,
         name,
         model,
