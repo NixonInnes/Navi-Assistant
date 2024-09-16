@@ -2,36 +2,17 @@
 <span style="color: magenta; font-size: 20px;">·.•°•.·.✧ ✦ 🧚 ✦</span> 
 # Navi-Assistant
 
-Navi is a command-line personal assistant, powered by OpenAI,  designed to leverage terminal commands. For example, Navi can be configured to have the ability to execute `uname -a` to understand the current operating system.  
+Navi is an OpenAI assistant manager which allows you to quickly create assistants with useful tools and query them.
 
-A number of commands have been added by default, including:  
-- `date`
-- `cat`
-- `diff`
-- `df`
-- `ip address`
-- `journalctl`
-- `ls`
-- `lsblk`
-- `lscpu`
-- `lsusb`
-- `ps aux`
-- `rg` (ripgrep)
-- `sensors`
-- `systemctl status`
-- `tree`
-- `uptime`
-- `users`
-- `uname`
-- `w3m`
+## Features
+### Global & Local Assistants
+Navi allows for a "global" and "local" assistants. The global assistant is used when there is not an `.navi` configuration in the current directory.  
+This lets users create specific assistant configurations; e.g. a coding project assistant
 
-> NOTE: The current default list of commands is based upon a Linux system; in the future there should be defaults for Windows.  
+### Easy Assistant Tooling
+Navi configurations (both global and local) can be setup with tools to enhance the capability of the assistant. Sets of tools are managed via Github repositories (like: https://github.com/NixonInnes/Navi-Assistant-Tools-Linux).  
+This lets users create managed sets of tools, that are also shareable.
 
-The commands available to Navi is fully customisable. Commands are defined in a JSON file (`~/.local/config/navi/commands.json`).  
-Commands are added to assistants as tools during their creation. This makes it possible to extend your assistants capabilities.
-
-## Installation
-> TODO: There should be a bash script to curl and execute which installs Navi
-
-## Usage
+### Vector File Store Management
+Navi can be configured to include directories and file extension to sync with a vector file store associated to the assistant. A simple `sync` command lets users keep relevent files up to date for the assistant to search.
 
