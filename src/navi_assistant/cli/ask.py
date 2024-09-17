@@ -78,7 +78,13 @@ def run_assistant(navi: Navi, client: OpenAI):
         elif run.status == "requires_action":
             handle_required_actions(navi, client, run)
         elif run.status in ("cancelling", "cancelled", "failed", "expired"):
-            click.echo(messaging.make_error(f"Run status: {run.status}"))
+            click.echo(messaging.make_error("\nRun failed."))
+            click.echo(messaging.make_error(f"  Status: {run.status}"))
+            try:
+                click.echo(messaging.make_error(f"  Code: {run.last_error['code']}"))
+                click.echo(messaging.make_error(f"  Message: {run.last_error['message']}"))
+            except Exception as e:
+                click.echo(messaging.make_error(f"  Error: {e}"))
             return
         run = client.beta.threads.runs.retrieve(
             thread_id=navi.config["thread_id"], run_id=run.id

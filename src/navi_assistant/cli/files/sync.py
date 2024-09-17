@@ -10,11 +10,14 @@ from ...style import art, messaging
 
 
 @click.command()
-def sync():
+@click.option(
+    "--global", "use_global", is_flag=True, help="Use the global configuration"
+)
+def sync(use_global: bool = False):
     """Sync the store files with the assistant."""
     click.echo(art.styled_fairy + messaging.make_header("Files:Sync"))
 
-    navi = Navi()
+    navi = Navi(use_global)
 
     client = ai.get_client()
 
