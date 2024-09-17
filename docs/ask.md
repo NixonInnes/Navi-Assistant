@@ -1,4 +1,4 @@
-[<< Index](index)
+[<< Index](docs/index.md)
 
 ## `ask` 
 Ask your assistant a question.

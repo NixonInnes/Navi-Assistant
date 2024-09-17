@@ -1,4 +1,4 @@
-[<< Index](index)
+[<< Index](docs/index.md)
 
 ## `files set`
 Set the store files for the assistant.
