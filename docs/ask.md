@@ -8,8 +8,7 @@ navi ask [OPTIONS] ...
 ```
 
 ### Options
- - `--global`, `--use_global`  
- **Description**: Use the global configuration.
+ - `--global`, `--use_global` Use the global configuration.
 
 ### Example
 ```bash
