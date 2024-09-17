@@ -1,4 +1,4 @@
-[<< Index](docs/index.md)
+[<< Index](index.md)
 
 ## `init`
 Create a new local assistant.

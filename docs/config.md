@@ -1,4 +1,4 @@
-[<< Index](docs/index.md)
+[<< Index](index.md)
 
 ## `config`
 Modify the assistant configuration.

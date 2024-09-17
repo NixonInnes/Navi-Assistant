@@ -6,12 +6,12 @@
 <hr>
 
 **CONTENTS**  
-- [ask](docs/ask.md)
-- [config](docs/config.md)
-- [files](docs/files.md)
-- [info](docs/info.md)
-- [init](docs/init.md)
-- [sync](docs/sync.md)
-- [tools](docs/tools.md)
+- [ask](ask.md)
+- [config](config.md)
+- [files](files.md)
+- [info](info.md)
+- [init](init.md)
+- [sync](sync.md)
+- [tools](tools.md)
 
 

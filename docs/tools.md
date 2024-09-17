@@ -1,4 +1,4 @@
-[<< Index](docs/index.md)
+[<< Index](index.md)
 
 ## `tools pull`
 Pull a set of assistant tools from a GitHub repository.
