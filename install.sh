@@ -22,24 +22,22 @@ done
 
 # Check the OS
 echo "Checking OS..."
-if [ "$(uname)" == "Darwin" ]; then
+OS_TYPE="$(uname)"
+if [ "$OS_TYPE" == "Darwin" ]; then
   echo "macOS detected"
   echo "Please note that Navi has not been thoroughly tested on macOS."
-elif [ "$(uname)" == "Linux" ]; then
+elif [ "$OS_TYPE" == "Linux" ]; then
   echo "Linux detected"
 else
-  echo "Unsupported OS. Windows support is planned for the future."
+  echo "Unsupported OS detected."
+  echo "For Windows installation, please use the .ps1"
   exit 1
 fi
 
 echo "Installing Navi Assistant..."
 
 # Set the app directory based on XDG_DATA_HOME or default to ~/.local/share/navi
-if [ -z "${XDG_DATA_HOME+x}" ]; then
-  APP_DIR="$HOME/.local/share/navi"
-else
-  APP_DIR="$XDG_DATA_HOME/navi"
-fi
+APP_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/navi"
 
 mkdir -p "$APP_DIR"
 
@@ -56,17 +54,13 @@ source "$APP_DIR/venv/bin/activate"
 pip install "$APP_DIR/$NAVI_WHL" --force-reinstall
 
 # Set the bin directory based on XDG_BIN_HOME or default to ~/.local/bin
-if [ -z "${XDG_BIN_HOME+x}" ]; then
-  BIN_DIR="$HOME/.local/bin"
-else
-  BIN_DIR="$XDG_BIN_HOME"
-fi
+BIN_DIR="${XDG_BIN_HOME:-$HOME/.local/bin}"
 
 mkdir -p "$BIN_DIR"
 
 # Create the executable script for 'navi'
 echo "#!/bin/bash
-${APP_DIR}/venv/bin/python -m navi_assistant \"\$@\"" > "$BIN_DIR/navi"
+\"${APP_DIR}/venv/bin/python\" -m navi_assistant \"\$@\"" > "$BIN_DIR/navi"
 chmod +x "$BIN_DIR/navi"
 
 python3 -m navi_assistant.install

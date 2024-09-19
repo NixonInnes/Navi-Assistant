@@ -89,6 +89,7 @@ class Command:
             }
         )
 
+
 def load_commands(tools_dir: str) -> dict[str, Command]:
     """Load commands from the commands file and return a dictionary of Command objects."""
 

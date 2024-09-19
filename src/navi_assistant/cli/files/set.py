@@ -5,6 +5,7 @@ import click
 from ...navi import Navi
 from ...style import art, messaging
 
+
 @click.command()
 @click.option(
     "--global", "use_global", is_flag=True, help="Use the global configuration"
@@ -34,10 +35,15 @@ def set(dirs: list[str], file_exts: list[str], use_global: bool = False):
     if navi.is_global:
         click.echo(messaging.make_warning("Global configuration"))
 
-    click.echo(messaging.make_info("Setting store file directories to: " + ", ".join(dirs)))
-    click.echo(messaging.make_info("Setting store file extensions to: " + ", ".join(file_exts)))
+    click.echo(
+        messaging.make_info("Setting store file directories to: " + ", ".join(dirs))
+    )
+    click.echo(
+        messaging.make_info("Setting store file extensions to: " + ", ".join(file_exts))
+    )
 
     navi.config["store_folders"] = dirs
     navi.config["store_file_extensions"] = file_exts
 
     navi.save_config()
+

@@ -61,18 +61,14 @@ def setup_assistant(navi: Navi, client: OpenAI) -> None:
 
 
 def setup_new_assistant(navi: Navi, client: OpenAI) -> None:
-    name: str = click.prompt(
-        messaging.make_prompt("Enter Assistant Name"), type=str
-    )
+    name: str = click.prompt(messaging.make_prompt("Enter Assistant Name"), type=str)
     description: str = click.prompt(
         messaging.make_prompt("Enter Assistant Description"), type=str
     )
     instructions: str = click.prompt(
         messaging.make_prompt("Enter Assistant Instructions"), type=str
     )
-    model: str = click.prompt(
-        messaging.make_prompt("Enter Assistant Model"), type=str
-    )
+    model: str = click.prompt(messaging.make_prompt("Enter Assistant Model"), type=str)
 
     navi.config["name"] = name
     navi.config["description"] = description

@@ -17,13 +17,13 @@ class Navi:
 
     def __init__(self, is_global: bool = False, load_defaults: bool = False):
         self.__is_global = is_global
-        
+
         self._config_handler = JsonHandler[NaviConfig](self.config_file)
         self._cache_handler = JsonHandler[NaviCache](self.cache_file)
 
         self.load_config()
         self.load_cache()
-    
+
     @property
     def is_global(self) -> bool:
         return self.__is_global
@@ -62,10 +62,6 @@ class Navi:
 
     def save_config(self) -> None:
         self._config_handler.save(self.config)
-    
+
     def save_cache(self) -> None:
         self._cache_handler.save(self.cache)
-
-
-    
-

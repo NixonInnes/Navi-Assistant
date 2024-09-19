@@ -6,12 +6,15 @@ from .. import ai
 from ..navi import Navi
 from ..style import art, messaging
 
+
 @click.command()
-@click.option("--global", "use_global", is_flag=True, help="Use the global configuration")
+@click.option(
+    "--global", "use_global", is_flag=True, help="Use the global configuration"
+)
 def sync(use_global: bool):
     """Sync the assistant configuration with OpenAI."""
     click.echo(art.styled_fairy + messaging.make_header("Sync"))
-    
+
     navi = Navi(use_global)
 
     client = ai.get_client()
@@ -24,5 +27,3 @@ def sync(use_global: bool):
         instructions=navi.config["instructions"],
         tools_dir=navi.tools_dir,
     )
-
-

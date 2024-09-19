@@ -12,6 +12,7 @@ from openai.types.beta.vector_stores.vector_store_file import VectorStoreFile
 from . import API_KEY_FILE
 from .commands import load_commands
 
+
 class AssistantSpec(TypedDict):
     name: str | None
     model: str
@@ -50,36 +51,48 @@ def create_thread(client: OpenAI) -> str:
     return thread.id
 
 
-def create_assistant(client: OpenAI, name: str, model: str, instructions: str, tools_dir: str) -> tuple[str, str]:
+def create_assistant(
+    client: OpenAI, name: str, model: str, instructions: str, tools_dir: str
+) -> tuple[str, str]:
     # TODO: Fix tools typing
-    store_id = create_store(client, name+"-store")
-    tools= [{"type": "file_search"}] + [tool.definition for tool in load_commands(tools_dir).values()], # pyright: ignore[reportArgumentType]
+    store_id = create_store(client, name + "-store")
+    tools = (
+        [{"type": "file_search"}]
+        + [tool.definition for tool in load_commands(tools_dir).values()],
+    )  # pyright: ignore[reportArgumentType]
     print(tools)
     assistant = client.beta.assistants.create(
         name=name,
         model=model,
         instructions=instructions,
-        tools=
-            [{"type": "file_search"}] +
-            [tool.definition for tool in load_commands(tools_dir).values()], # pyright: ignore[reportArgumentType]
+        tools=[{"type": "file_search"}]
+        + [tool.definition for tool in load_commands(tools_dir).values()],  # pyright: ignore[reportArgumentType]
         tool_resources={"file_search": {"vector_store_ids": [store_id]}},
     )
 
     return assistant.id, store_id
 
-def update_assistant(client: OpenAI, assistant_id: str, name: str, model: str, instructions: str, tools_dir: str) -> None:
+
+def update_assistant(
+    client: OpenAI,
+    assistant_id: str,
+    name: str,
+    model: str,
+    instructions: str,
+    tools_dir: str,
+) -> None:
     _ = client.beta.assistants.update(
         assistant_id,
         name=name,
         model=model,
         instructions=instructions,
-        tools=[tool.definition for tool in load_commands(tools_dir).values()], # pyright: ignore[reportArgumentType]
+        tools=[tool.definition for tool in load_commands(tools_dir).values()],  # pyright: ignore[reportArgumentType]
     )
+
 
 def create_store(client: OpenAI, name: str) -> str:
     store = client.beta.vector_stores.create(name=name)
     return store.id
-
 
 
 def get_store_files(dirs: list[str], extensions: list[str]) -> list[str]:
@@ -100,15 +113,16 @@ def upload_file(client: OpenAI, store_id: str, file: str) -> VectorStoreFile:
         purpose="assistants",
     )
     return client.beta.vector_stores.files.create(
-        vector_store_id=store_id, 
-        file_id=store_file.id)
+        vector_store_id=store_id, file_id=store_file.id
+    )
+
 
 def delete_file(client: OpenAI, store_id: str, file_id: str) -> None:
     _ = client.beta.vector_stores.files.delete(
-        vector_store_id=store_id,
-        file_id=file_id
+        vector_store_id=store_id, file_id=file_id
     )
     _ = client.files.delete(file_id)
+
 
 def list_store_files(client: OpenAI, store_id: str) -> list[VectorStoreFile]:
     files: list[VectorStoreFile] = []
@@ -119,3 +133,4 @@ def list_store_files(client: OpenAI, store_id: str) -> list[VectorStoreFile]:
         q = q.get_next_page()
         files.extend(q.data)
     return files
+

@@ -81,8 +81,10 @@ def run_assistant(navi: Navi, client: OpenAI):
             click.echo(messaging.make_error("\nRun failed."))
             click.echo(messaging.make_error(f"  Status: {run.status}"))
             try:
-                click.echo(messaging.make_error(f"  Code: {run.last_error['code']}"))
-                click.echo(messaging.make_error(f"  Message: {run.last_error['message']}"))
+                click.echo(messaging.make_error(f"  Code: {run.last_error['code']}"))  # pyright: ignore[reportIndexIssue]
+                click.echo(
+                    messaging.make_error(f"  Message: {run.last_error['message']}")  # pyright: ignore[reportIndexIssue]
+                )
             except Exception as e:
                 click.echo(messaging.make_error(f"  Error: {e}"))
             return

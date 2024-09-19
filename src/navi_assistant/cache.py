@@ -9,6 +9,7 @@ class NaviCacheStoreFile(TypedDict):
     id: str
     uploaded: float
 
+
 class NaviCache(TypedDict):
     """A JSON representation of the Navi Assistant cache."""
 
@@ -21,8 +22,5 @@ class NaviCache(TypedDict):
 def default_cache() -> NaviCache:
     """Generate a default cache for the Navi Assistant."""
     return NaviCache(
-        last_message_id="",
-        last_query="",
-        last_response="",
-        store_files={}
+        last_message_id="", last_query="", last_response="", store_files={}
     )

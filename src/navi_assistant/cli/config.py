@@ -26,7 +26,7 @@ def config(use_global: bool, key: str, value: str):
     else:
         click.echo(messaging.make_info("Local configuration"))
 
-    if key not in [k for k, v in get_type_hints(NaviConfig).items() if v is str]: # pyright: ignore[reportAny]
+    if key not in [k for k, v in get_type_hints(NaviConfig).items() if v is str]:  # pyright: ignore[reportAny]
         click.echo(messaging.make_error(f"Invalid configuration key: {key}"))
         return
 

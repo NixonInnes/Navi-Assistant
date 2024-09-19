@@ -22,6 +22,7 @@ Navi can be configured to include specific directories and file extensions to sy
 
 A simple `sync` command lets users keep relevent files up to date for the assistant to search.
 
+
 ## Installation
 
 ### Requirements
