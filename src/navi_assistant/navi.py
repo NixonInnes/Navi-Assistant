@@ -16,7 +16,11 @@ class Navi:
     cache: NaviCache
 
     def __init__(self, is_global: bool = False, load_defaults: bool = False):
-        self.__is_global = is_global
+        is_local_config = os.path.exists(
+            os.path.join(os.getcwd(), self.LOCAL_CONFIG_DIR)
+        )
+
+        self.__is_global = is_global or not is_local_config
 
         self._config_handler = JsonHandler[NaviConfig](self.config_file)
         self._cache_handler = JsonHandler[NaviCache](self.cache_file)

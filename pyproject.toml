@@ -1,6 +1,6 @@
 [project]
 name = "navi-assistant"
-version = "0.1.3"
+version = "0.1.4"
 description = "Navi is an OpenAI assistant manager which allows you to quickly create assistants with useful tools and query them."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -9,6 +9,10 @@ dependencies = [
     "click>=8.1.7",
     "rich>=13.8.1",
 ]
+
+[project.scripts]
+navi = "navi_assistant.__entry__:navi"
+install_navi = "navi_assistant.__entry__:install_navi"
 
 [build-system]
 requires = ["hatchling"]
